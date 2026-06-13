@@ -1,51 +1,74 @@
 ---
 name: latent-design
-description: Use this skill to generate well-branded interfaces and assets for latent. (the quiet systems laboratory — and its projects ido and logos), either for production or throwaway prototypes/mocks/etc. Contains essential design guidelines, colors, type, fonts, assets, and UI kit components for prototyping.
+description: Design system for latent. — generates well-branded interfaces and assets for the latent. ecosystem (umbrella site, ido, logos). Contains the full design canon: brand guidelines, color tokens, type scale, self-hosted fonts, SVG assets, and JSX reference prototypes for all three surfaces.
 user-invocable: true
 ---
 
 # latent. — design skill
 
-`latent.` is a quiet systems laboratory. The brand is typography-first, warm-neutral,
-architectural, and restrained: **depth over noise**, borders over shadows, accent used
-sparingly. Two products live under it — **ido** (a local-first knowledge system) and
-**logos** (a disciplined trading/research system).
+`latent.` is a quiet systems laboratory. The brand is typography-first, warm-neutral, architectural, and restrained: **depth over noise**, borders over shadows, accent used sparingly.
+
+Two products live under the umbrella:
+- **ido** (井戸) — local-first knowledge system, notes, wiki, tasks, goals
+- **logos** (λόγος) — algorithmic trading, backtesting, research
+
+## Files in this skill
+
+| File | What to do with it |
+|---|---|
+| `README.md` | Full brand canon — read this for foundations, voice, assets, usage |
+| `tokens.css` | The token source: `@font-face`, both color themes, type/space/radius/motion scale, CSS reset. Copy or submodule into every project. |
+| `components.css` | Shared component CSS (header/footer shell, project row, tag). Needs `tokens.css` first. |
+| `fonts/` | Self-hosted woff2s — General Sans, Geist, Geist Mono. Ship alongside `tokens.css`. |
+| `assets/` | SVG wordmarks and marks in dark + light variants. |
+| `ui_kits/latent-site/` | JSX prototype — umbrella website patterns |
+| `ui_kits/ido/` | JSX prototype — ido knowledge system patterns |
+| `ui_kits/logos/` | JSX prototype — logos trading/research patterns |
+
+Each `ui_kits/<product>/` contains `README.md`, interactive `index.html`, `components.jsx`, and `views.jsx`.
 
 ## How to use this skill
 
-1. **Read `README.md` first.** It holds brand context, the content/voice rules, the full
-   visual foundations, iconography guidance, and a manifest of every file here.
-2. **Pull in the tokens.** Link or copy `colors_and_type.css` — it defines both themes
-   (dark = warm graphite, light = stone/paper), the type scale, spacing, radii, motion,
-   and semantic element styles. General Sans + Geist Mono are self-hosted from `fonts/`;
-   Geist loads from Google Fonts (`@import` is documented at the top of the CSS).
-3. **Reuse, don't reinvent.** The `ui_kits/` folders (`latent-site`, `ido`, `logos`)
-   contain small, composable JSX components and interactive `index.html` demos. Lift
-   components and patterns from there rather than designing new ones.
-4. **Use the real assets.** Wordmark SVGs live in `assets/`. Icons: Lucide via CDN (see
-   ICONOGRAPHY in the README). Never hand-draw icons or use emoji.
-5. **Preview specimens** live in `preview/` if you need to see tokens rendered.
+### For prototypes and mocks (HTML artifacts)
 
-## Output modes
+1. Read `README.md` for brand context and visual rules
+2. Use `tokens.css` + `components.css` as your stylesheet base (inline or linked)
+3. Lift JSX patterns from `ui_kits/` and translate to plain HTML
+4. Use font files from `fonts/`, SVGs from `assets/`
+5. Icons: Lucide via CDN only. Never hand-draw, never emoji.
+6. Produce a single static `index.html` the user can open in a browser
 
-- **Visual artifacts** (slides, mocks, throwaway prototypes): copy the assets/fonts you
-  need and produce static HTML files the user can open and view.
-- **Production code:** read the rules here, copy tokens/assets, and design as an expert
-  in this brand.
+### For production code (Leptos/Rust)
+
+1. Read `README.md` for foundations and rules
+2. Pair with `latent-ui` (Rust crate) for production Leptos components — it provides `ThemeToggle`, `Tag`, theme machinery, and will grow to include `SiteHeader`, `SiteFooter`, `ProjectRow`
+3. CSS is consumed via git submodule (`vendor/latent-design`) — see README for Trunk wiring
+4. Produce idiomatic Leptos components matching the brand
+
+### For design decisions
+
+Read `README.md` — especially the Color, Typography, Surfaces, and North Star sections. When in doubt: quieter is correct.
+
+## Quick token reference
+
+```css
+/* dark theme (default) */
+--color-bg:             #11110f   /* base background */
+--color-surface:        #181816   /* card/panel surface */
+--color-border-subtle:  #2a2925   /* hairline borders */
+--color-text-primary:   #e9e2d4   /* headings, primary text */
+--color-text-secondary: #aaa196   /* body, supporting text */
+--color-text-muted:     #777169   /* metadata, labels */
+--color-accent:         #b7a98f   /* single accent, use sparingly */
+--font-ui:   "Geist", sans-serif
+--font-mono: "Geist Mono", monospace
+```
 
 ## If invoked with no guidance
 
-Ask what the user wants to build or design (which surface — site, ido, logos, something
-new?), ask a few focused questions, then act as an expert designer who outputs HTML
-artifacts *or* production code depending on the need.
+Ask: which surface (latent. site, ido, logos, or something new)? Prototype or production code? Then act as an expert designer and deliver.
 
 ## North star
 
-> Does this make latent. feel quieter, clearer, and more structurally intentional?
+> Does this make latent. feel **quieter, clearer, and more structurally intentional?**
 > If yes, keep it. If it only makes things louder, trendier, or more decorative, remove it.
-
-## Note on provenance
-
-Only the `latent.foundation` website exists as real code (a minimal placeholder). The
-`ido` and `logos` kits are principled interpretations of the written brief — refine
-them against real product decisions as those products get built.
