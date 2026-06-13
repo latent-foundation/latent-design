@@ -1,0 +1,196 @@
+/* latent. — design tokens (canon)
+   Brand atoms shared across every latent. surface: self-hosted fonts, the dark
+   + light token sets, the type/space/radius/motion scale, and the reset/base.
+   Font paths are relative to this file; ship `fonts/` alongside it. */
+
+/* === FONTS === */
+@font-face {
+  font-family: "Geist Mono"; font-style: normal; font-weight: 400;
+  font-display: swap; src: url("fonts/GeistMono-Regular.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Geist Mono"; font-style: normal; font-weight: 500;
+  font-display: swap; src: url("fonts/GeistMono-Medium.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Geist Mono"; font-style: normal; font-weight: 600;
+  font-display: swap; src: url("fonts/GeistMono-SemiBold.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Geist Mono"; font-style: italic; font-weight: 400;
+  font-display: swap; src: url("fonts/GeistMono-Italic.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Geist Mono Variable"; font-style: normal; font-weight: 100 900;
+  font-display: swap; src: url("fonts/GeistMono_wght_.woff2") format("woff2-variations");
+}
+
+@font-face {
+  font-family: "Geist"; font-style: normal; font-weight: 300;
+  font-display: swap; src: url("fonts/Geist-Light.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Geist"; font-style: normal; font-weight: 400;
+  font-display: swap; src: url("fonts/Geist-Regular.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Geist"; font-style: normal; font-weight: 500;
+  font-display: swap; src: url("fonts/Geist-Medium.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Geist"; font-style: normal; font-weight: 600;
+  font-display: swap; src: url("fonts/Geist-SemiBold.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Geist"; font-style: normal; font-weight: 700;
+  font-display: swap; src: url("fonts/Geist-Bold.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Geist"; font-style: italic; font-weight: 400;
+  font-display: swap; src: url("fonts/Geist-Italic.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Geist Variable"; font-style: normal; font-weight: 100 900;
+  font-display: swap; src: url("fonts/Geist_wght_.woff2") format("woff2-variations");
+}
+
+/* === TOKENS === */
+:root,
+[data-theme="dark"] {
+  --color-bg:             #11110f;
+  --color-bg-subtle:      #151512;
+  --color-surface:        #181816;
+  --color-surface-raised: #20201d;
+  --color-border-subtle:  #2a2925;
+  --color-border-strong:  #3b3933;
+  --color-text-primary:   #e9e2d4;
+  --color-text-secondary: #aaa196;
+  --color-text-muted:     #777169;
+  --color-accent:         #b7a98f;
+  --color-accent-hover:   #c9baa0;
+  --color-accent-soft:    #26231e;
+  --color-code-bg:        #161613;
+  --color-code-text:      #d9cfbf;
+  --color-selection-bg:   #312d26;
+}
+
+[data-theme="light"] {
+  --color-bg:             #f3efe6;
+  --color-bg-subtle:      #ece6da;
+  --color-surface:        #e8e1d4;
+  --color-surface-raised: #ded5c6;
+  --color-border-subtle:  #d4cabc;
+  --color-border-strong:  #b9ad9d;
+  --color-text-primary:   #24221e;
+  --color-text-secondary: #625b51;
+  --color-text-muted:     #8b8174;
+  --color-accent:         #8c7f68;
+  --color-accent-hover:   #6f634f;
+  --color-accent-soft:    #ddd4c4;
+  --color-code-bg:        #e2dacd;
+  --color-code-text:      #2d2923;
+  --color-selection-bg:   #d8cfbe;
+}
+
+:root {
+  --font-ui:       "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono:     "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --text-display:  clamp(3.5rem, 11vw, 6rem);
+  --text-h1:       2.75rem;
+  --text-h2:       2rem;
+  --text-h3:       1.5rem;
+  --text-h4:       1.1875rem;
+  --text-body-lg:  1.125rem;
+  --text-body:     1rem;
+  --text-sm:       0.875rem;
+  --text-meta:     0.78rem;
+  --text-micro:    0.6875rem;
+
+  --weight-light:    300;
+  --weight-regular:  400;
+  --weight-medium:   500;
+  --weight-semibold: 600;
+
+  --tracking-display: -0.05em;
+  --tracking-heading: -0.04em;
+  --tracking-body:    -0.011em;
+  --tracking-mono:    -0.03em;
+
+  --leading-tight:   1.05;
+  --leading-snug:    1.25;
+  --leading-normal:  1.5;
+  --leading-relaxed: 1.7;
+
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  24px;
+  --space-6:  32px;
+  --space-8:  48px;
+  --space-10: 64px;
+  --space-12: 96px;
+  --space-16: 128px;
+
+  --radius-none: 0px;
+  --radius-sm:   2px;
+  --radius-md:   4px;
+  --radius-lg:   8px;
+  --radius-pill: 999px;
+
+  --shadow-none: none;
+  --shadow-sm:   0 1px 2px rgba(0, 0, 0, 0.18);
+  --shadow-md:   0 4px 16px rgba(0, 0, 0, 0.22);
+
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out:      cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast:   120ms;
+  --dur-normal: 200ms;
+  --dur-slow:   360ms;
+
+  --measure:          64ch;
+  --container:        1080px;
+  --border-hairline:  1px;
+}
+
+/* === RESET + BASE === */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-ui);
+  background: var(--color-bg);
+  color: var(--color-text-primary);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+  line-height: var(--leading-relaxed);
+  transition: background var(--dur-normal) var(--ease-standard),
+    color var(--dur-normal) var(--ease-standard);
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+}
+p {
+  margin: 0;
+}
+
+::selection {
+  background: var(--color-selection-bg);
+  color: var(--color-text-primary);
+}

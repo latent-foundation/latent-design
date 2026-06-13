@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ido 井戸 — knowledge system UI kit</title>
+  <style>
+    
+    
+  </style>
+  <link rel="stylesheet" href="../../colors_and_type.css" />
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; }
+    body {
+      background: var(--color-bg); color: var(--color-text-primary);
+      font-family: var(--font-ui); -webkit-font-smoothing: antialiased; text-rendering: geometricPrecision;
+    }
+    #root { height: 100vh; }
+    button { font-family: inherit; }
+    ::-webkit-scrollbar { width: 10px; height: 10px; }
+    ::-webkit-scrollbar-thumb { background: var(--color-border-subtle); border-radius: 999px; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <script type="text/babel" src="components.jsx"></script>
+  <script type="text/babel" src="views.jsx"></script>
+  <script type="text/babel">
+    const { useState } = React;
+    function App() {
+      const [view, setView] = useState("notes");
+      const [active, setActive] = useState("well");
+      let main;
+      if (view === "notes") main = <NoteView id={active} setActive={setActive} />;
+      else if (view === "tasks") main = <TaskView />;
+      else main = <GoalView />;
+      return (
+        <div style={{ display: "flex", height: "100%" }}>
+          <Sidebar active={active} setActive={(id) => { setActive(id); setView("notes"); }} view={view} setView={setView} />
+          <main style={{ flex: 1, height: "100%", background: "var(--color-bg)" }}>{main}</main>
+        </div>
+      );
+    }
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
+</body>
+</html>
