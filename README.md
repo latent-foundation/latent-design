@@ -27,9 +27,28 @@ latent.            umbrella identity — hidden structure, the systems archive
 | `ui_kits/latent-site/` | JSX reference prototype — the latent. umbrella website. |
 | `ui_kits/ido/` | JSX reference prototype — ido knowledge system. |
 | `ui_kits/logos/` | JSX reference prototype — logos research platform. |
+| `docs/` | **Ecosystem canon** — architecture, conventions, bootstrap guide, glossary, knowledge/MCP roadmap. The single source of truth that every app's `CLAUDE.md` points at (see below). |
 | `SKILL.md` | Claude Code skill manifest — makes this a usable `/latent-design` skill. |
 
 > **ui_kits are reference prototypes, not production.** They are principled design proposals consistent with the brief. Production UI lives in `latent-ui` (Leptos/Rust) and in each app. Refine the kits against real product decisions as they get built.
+
+---
+
+## Ecosystem canon — `docs/`
+
+This repo is also the **single source of truth for engineering knowledge** across the
+ecosystem, not just visuals. Because `latent-design` is vendored into every app as the
+`vendor/latent-design` submodule, anything in `docs/` ships into every app's working tree
+— so each app's `CLAUDE.md` **points at these files instead of restating them**, which
+keeps the canon from drifting.
+
+| Doc | What it covers |
+|---|---|
+| [`docs/ecosystem.md`](docs/ecosystem.md) | The 3-layer architecture, sharing model, CSS cascade, anti-FOUC, dependency pinning |
+| [`docs/conventions.md`](docs/conventions.md) | Rust/Leptos/Trunk conventions, formatting, signals, theme, CI |
+| [`docs/bootstrap-new-app.md`](docs/bootstrap-new-app.md) | Step-by-step: stand up a new latent. app |
+| [`docs/glossary.md`](docs/glossary.md) | What latent. / ido / logos / each layer mean |
+| [`docs/knowledge-architecture.md`](docs/knowledge-architecture.md) | Knowledge-centralization + MCP roadmap (incl. ido as an MCP server) |
 
 ---
 

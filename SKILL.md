@@ -21,6 +21,7 @@ Two products live under the umbrella:
 | `components.css` | Shared component CSS (header/footer shell, project row, tag). Needs `tokens.css` first. |
 | `fonts/` | Self-hosted woff2s — General Sans, Geist, Geist Mono. Ship alongside `tokens.css`. |
 | `assets/` | SVG wordmarks and marks in dark + light variants. |
+| `docs/` | **Ecosystem canon** — engineering knowledge (architecture, conventions, bootstrap, glossary, MCP roadmap). Read when building/modifying any latent. app, not just for visuals. |
 | `ui_kits/latent-site/` | JSX prototype — umbrella website patterns |
 | `ui_kits/ido/` | JSX prototype — ido knowledge system patterns |
 | `ui_kits/logos/` | JSX prototype — logos trading/research patterns |
