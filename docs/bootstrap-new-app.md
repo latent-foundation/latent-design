@@ -53,9 +53,42 @@ This vendors `tokens.css`, `components.css`, `fonts/`, `assets/`, and `docs/` in
 working tree. Use the canonical HTTPS URL in `.gitmodules` — a relative URL breaks fresh
 clones and CI.
 
+Also pin the tracked branch so `git submodule update --remote` always has an explicit
+target. Add to `.gitmodules`:
+
+```ini
+[submodule "vendor/latent-design"]
+    path = vendor/latent-design
+    url = https://github.com/latent-foundation/latent-design.git
+    branch = main
+```
+
 ---
 
-## 3. Wire `index.html` for Trunk
+## 3. Wire the Claude Code skill
+
+Symlink `.claude/skills/latent-design` → `vendor/latent-design` so the `/latent-design`
+slash command is available in this project and stays in sync with the submodule
+automatically — no separate copy to maintain.
+
+**Windows** (requires Developer Mode or admin):
+```powershell
+New-Item -ItemType Directory -Force .claude\skills
+New-Item -ItemType SymbolicLink -Path .claude\skills\latent-design -Target vendor\latent-design
+```
+
+**macOS / Linux:**
+```sh
+mkdir -p .claude/skills
+ln -s ../../vendor/latent-design .claude/skills/latent-design
+```
+
+Add `.claude/` to `.gitignore` if you don't want to commit the symlink (it's
+machine-local). Commit it if you want the skill wired for every contributor automatically.
+
+---
+
+## 4. Wire `index.html` for Trunk
 
 ```html
 <!DOCTYPE html>
@@ -90,7 +123,7 @@ Create `style/app.css` for page/layout styles — the only stylesheet this app o
 
 ---
 
-## 4. Bootstrap the App root
+## 5. Bootstrap the App root
 
 ```rust
 // src/app.rs
@@ -120,7 +153,7 @@ fn main() {
 
 ---
 
-## 5. Tooling
+## 6. Tooling
 
 Add the standard files from an existing app:
 
@@ -135,7 +168,7 @@ Install the toolchain: `rustup target add wasm32-unknown-unknown`, then
 
 ---
 
-## 6. CI
+## 7. CI
 
 ```yaml
 # .github/workflows/ci.yml
@@ -152,7 +185,7 @@ Mirror `submodules: recursive` in any deploy workflow too.
 
 ---
 
-## 7. Verify
+## 8. Verify
 
 ```sh
 git submodule update --init --recursive
@@ -164,10 +197,89 @@ If `trunk serve` renders styled and the theme toggle works, the wiring is correc
 
 ---
 
-## Tauri note (ido, logos)
+## Tauri-only apps (ido, logos)
 
-Tauri wraps the same Leptos frontend — none of the above changes. Add the Tauri
-scaffolding (`src-tauri/`, `tauri.conf.json`) around the Trunk build, point Tauri's
-`devUrl`/`frontendDist` at Trunk's dev server / `dist/`, and keep the CSS + theme wiring
-exactly as above. The local-first data layer (and any future MCP server over it — see
-[knowledge-architecture.md](./knowledge-architecture.md)) lives in the Tauri Rust backend.
+For apps that are **desktop-only** (no standalone web deploy), the scaffold comes from
+`cargo create-tauri-app` rather than `cargo new`. Steps 1–8 above still apply, but the
+project shape and commands differ.
+
+### Scaffold
+
+```sh
+cargo install create-tauri-app --locked
+cargo create-tauri-app
+```
+
+When prompted:
+- **Project name:** `ido` (or `logos`)
+- **Frontend language:** `Rust`
+- **UI template:** `Leptos` — this selects Trunk as the bundler automatically
+
+This produces a Cargo workspace:
+
+```
+ido/
+  Cargo.toml          workspace manifest
+  index.html          Trunk entry — your CSS cascade goes here (step 4)
+  src/                Leptos frontend crate
+    main.rs
+    app.rs
+    lib.rs
+  src-tauri/          Tauri backend crate
+    Cargo.toml
+    tauri.conf.json
+    src/
+      main.rs
+      lib.rs
+  style/              create this — app.css lives here
+```
+
+After scaffolding, continue with steps 1–8: add the `latent-ui` Cargo dep to the
+**frontend** `Cargo.toml` (not the workspace root or `src-tauri/`), add the submodule,
+wire the skill symlink, and update `index.html` with the anti-FOUC script and CSS cascade.
+
+### Commands (replace trunk serve / trunk build)
+
+```sh
+cargo tauri dev          # starts Trunk dev server + opens native window (hot reload)
+cargo tauri build        # bundles release binary for the current platform
+just verify              # still works — runs against the frontend crate
+```
+
+Update the `justfile` to use `cargo tauri dev` in any `serve` recipe.
+
+### tauri.conf.json wiring
+
+The scaffold sets these automatically for a Leptos/Trunk frontend — verify they match:
+
+```json
+{
+  "build": {
+    "devUrl": "http://localhost:8080",
+    "frontendDist": "../dist"
+  }
+}
+```
+
+`cargo tauri dev` starts Trunk (serving on `:8080`) and opens the Tauri window pointing at
+it. `cargo tauri build` runs `trunk build --release` and packages the `dist/` output.
+
+### What's different from a web app
+
+| | Web app (latent.foundation) | Tauri app (ido, logos) |
+|---|---|---|
+| Scaffold | `cargo new --bin` | `cargo create-tauri-app` |
+| Structure | single crate | Cargo workspace |
+| Dev | `trunk serve` | `cargo tauri dev` |
+| Build | `trunk build --release` | `cargo tauri build` |
+| Deploy | Cloudflare Pages | native binary (.app / .exe / .deb) |
+| CI | `just verify` + pages deploy | `just verify` + per-platform binary build |
+| Backend | none | `src-tauri/` Rust process (IPC, fs, native APIs) |
+
+### Backend and MCP
+
+The local-first data layer lives in the `src-tauri/` Rust backend. When the time comes
+to add an MCP server over the ido note/task store, it lives here too — sharing data-access
+code with the Tauri commands. See
+[knowledge-architecture.md](./knowledge-architecture.md#ido-mcp-surface-when-ido-exists)
+for the planned MCP surface.
