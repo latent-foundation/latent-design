@@ -1,6 +1,6 @@
 ---
 name: latent-design
-description: Design system for latent. — generates well-branded interfaces and assets for the latent. ecosystem (umbrella site, ido, logos). Contains the full design canon: brand guidelines, color tokens, type scale, self-hosted fonts, SVG assets, and JSX reference prototypes for all three surfaces.
+description: Design system for latent. — generates well-branded interfaces and assets for the latent. ecosystem (umbrella site, ido, logos). Contains the full design canon: brand guidelines, color tokens, type scale, self-hosted fonts, SVG assets, and the ecosystem engineering docs (architecture, conventions, bootstrap, glossary).
 user-invocable: true
 ---
 
@@ -22,11 +22,6 @@ Two products live under the umbrella:
 | `fonts/` | Self-hosted woff2s — General Sans, Geist, Geist Mono. Ship alongside `tokens.css`. |
 | `assets/` | SVG wordmarks and marks in dark + light variants. |
 | `docs/` | **Ecosystem canon** — engineering knowledge (architecture, conventions, bootstrap, glossary, MCP roadmap). Read when building/modifying any latent. app, not just for visuals. |
-| `ui_kits/latent-site/` | JSX prototype — umbrella website patterns |
-| `ui_kits/ido/` | JSX prototype — ido knowledge system patterns |
-| `ui_kits/logos/` | JSX prototype — logos trading/research patterns |
-
-Each `ui_kits/<product>/` contains `README.md`, interactive `index.html`, `components.jsx`, and `views.jsx`.
 
 ## How to use this skill
 
@@ -34,7 +29,7 @@ Each `ui_kits/<product>/` contains `README.md`, interactive `index.html`, `compo
 
 1. Read `README.md` for brand context and visual rules
 2. Use `tokens.css` + `components.css` as your stylesheet base (inline or linked)
-3. Lift JSX patterns from `ui_kits/` and translate to plain HTML
+3. Build markup from `components.css` and the rules in `README.md` — there are no JSX prototypes to copy from
 4. Use font files from `fonts/`, SVGs from `assets/`
 5. Icons: Lucide via CDN only. Never hand-draw, never emoji.
 6. Produce a single static `index.html` the user can open in a browser

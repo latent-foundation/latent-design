@@ -57,7 +57,6 @@ asset pipeline in full control of styling and Cargo in full control of behavior.
   pill). Depends on `tokens.css`.
 - `fonts/` — self-hosted woff2 family (General Sans, Geist, Geist Mono).
 - `assets/` — latent. mark / wordmark / lockup SVGs, dark + light.
-- `ui_kits/{latent-site,ido,logos}/` — JSX reference prototypes (not production).
 - `docs/` — this canon (ecosystem, conventions, bootstrap, glossary, knowledge-architecture).
 - `README.md` / `SKILL.md` — design system usage + the `/latent-design` skill.
 

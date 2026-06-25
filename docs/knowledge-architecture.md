@@ -54,7 +54,7 @@ latent-design/
     glossary.md                 ← what ido / logos / latent. each mean
   README.md                     ← design system usage (already good)
   SKILL.md                      ← /latent-design skill (already good)
-  tokens.css  components.css  fonts/  assets/  ui_kits/
+  tokens.css  components.css  fonts/  assets/
 ```
 
 ### The "point, don't restate" rule

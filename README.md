@@ -24,13 +24,10 @@ latent.            umbrella identity — hidden structure, the systems archive
 | `components.css` | Shared component styles: site header/footer shell, project row, tag pill. Depends on `tokens.css`. |
 | `fonts/` | Self-hosted woff2 family — General Sans, Geist, Geist Mono. Font paths in `tokens.css` resolve relative to the CSS file; ship `fonts/` alongside it. |
 | `assets/` | SVG marks and wordmarks, dark + light variants (see Assets below). |
-| `ui_kits/latent-site/` | JSX reference prototype — the latent. umbrella website. |
-| `ui_kits/ido/` | JSX reference prototype — ido knowledge system. |
-| `ui_kits/logos/` | JSX reference prototype — logos research platform. |
 | `docs/` | **Ecosystem canon** — architecture, conventions, bootstrap guide, glossary, knowledge/MCP roadmap. The single source of truth that every app's `CLAUDE.md` points at (see below). |
 | `SKILL.md` | Claude Code skill manifest — makes this a usable `/latent-design` skill. |
 
-> **ui_kits are reference prototypes, not production.** They are principled design proposals consistent with the brief. Production UI lives in `latent-ui` (Leptos/Rust) and in each app. Refine the kits against real product decisions as they get built.
+> **This repo is the design canon — tokens, components, fonts, assets, and the engineering docs — not a component library.** Production UI lives in `latent-ui` (Leptos/Rust) and in each app.
 
 ---
 
